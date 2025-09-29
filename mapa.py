@@ -33,6 +33,13 @@ class mapa:
         else: 
             print("coordenadas fuera del rango!")
             
+    #modificamos nuestra celda
+    def modificar_celda(self, fila, columna, tipo):
+        if tipo in [" . ", " A ", " X "]:
+            self.tablero[fila][columna] = tipo 
+            return True
+        return False
+            
                 
                 
         
