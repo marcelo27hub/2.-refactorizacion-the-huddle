@@ -12,8 +12,8 @@ class mapa:
         self.tablero = [[" . " for _ in range(columnas)] for _ in range(filas)] 
         self.inicio = None
         self.destino = None
-
-    #metodo imprimir tablero 
+#CREAMOS NUESTROS METODOS DE INSTANCIA
+    #imprimimos nuestro tablero 
     def imprimir(self):
         for fila in self.tablero:
             print(" ".join(fila))
@@ -25,5 +25,14 @@ class mapa:
         if 0 <= fila <self.filas and 0 <= columna < self.columnas:
             return self.tablero[fila][columna] in [" . ", " p ", " F "]
         return False
-        
+    
+    #agregamos obstaculos
+    def agregar_obstaculos(self, fila, columna, tipo):
+        if 0 <= fila <self.filas and 0 <= columna < self.columnas:
+            self.tablero[fila][columna] = tipo
+        else: 
+            print("coordenadas fuera del rango!")
+            
+                
+                
         
