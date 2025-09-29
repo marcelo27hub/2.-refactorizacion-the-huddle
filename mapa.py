@@ -19,5 +19,11 @@ class mapa:
             print(" ".join(fila))
         #salto de linea para que se vea mejor     
         print()
-
+        
+    #aseguramos que no sea un obstaculo     
+    def no_obstaculo(self, fila, columna):
+        if 0 <= fila <self.filas and 0 <= columna < self.columnas:
+            return self.tablero[fila][columna] in [" . ", " p ", " F "]
+        return False
+        
         
