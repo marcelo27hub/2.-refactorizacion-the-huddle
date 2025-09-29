@@ -39,7 +39,16 @@ class mapa:
             self.tablero[fila][columna] = tipo 
             return True
         return False
-            
-                
-                
-        
+    #generamos el camino solo con el camino marcado y el camino visible
+    def generar_tablero_limpio(self, camino):
+        limpio = [[" . " for _ in range(self.columnas)] for _ in range(self.filas)]
+        if camino:
+            for f, c in camino:
+                if self.tablero[f][c] == " A ":
+                    limpio[f][c] = " A "
+                else:
+                    limpio[f][c] = " * "
+            #marcar inicio y destino 
+            limpio[camino[0][0]][camino[0][1]]= " P "
+            limpio[camino[-1][0]][camino[-1][1]] = " F "
+        return limpio        
