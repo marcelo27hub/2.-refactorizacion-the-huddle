@@ -13,6 +13,11 @@ class mapa:
         self.inicio = None
         self.destino = None
 
-            
-        
+    #metodo imprimir tablero 
+    def imprimir(self):
+        for fila in self.tablero:
+            print(" ".join(fila))
+        #salto de linea para que se vea mejor     
+        print()
 
+        
