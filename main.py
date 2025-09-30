@@ -1,7 +1,7 @@
 import copy
 from mapa import Mapa
 from calculadora_rutas import CalculadoraDeRutas
-from input_usuario import InterfazUsuario
+from input_usuario import UsuarioEntrada
 
 def main():
     print("BIENVENIDOS AL BUSCADOR DE RUTAS OOP")
@@ -13,8 +13,8 @@ def main():
     mapa.agregar_obstaculos_usuario()
     mapa.imprimir()
 
-    inicio = InterfazUsuario.pedir_coordenadas("Inicio", mapa)
-    destino = InterfazUsuario.pedir_coordenadas("Destino", mapa)
+    inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
+    destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
 
     calculadora = CalculadoraDeRutas(mapa)
     camino = calculadora.calcular_ruta(inicio, destino)
@@ -65,8 +65,8 @@ def main():
             columnas = int(input("Ingrese cantidad de columnas: "))
             mapa = Mapa(filas, columnas)
             mapa.agregar_obstaculos_usuario()
-            inicio = InterfazUsuario.pedir_coordenadas("Inicio", mapa)
-            destino = InterfazUsuario.pedir_coordenadas("Destino", mapa)
+            inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
+            destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
             calculadora = CalculadoraDeRutas(mapa)
             camino = calculadora.calcular_ruta(inicio, destino)
             if camino:
