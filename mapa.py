@@ -4,7 +4,7 @@ import random
 
 #creamos una clase mapa
 
-class mapa:
+class Mapa:
     #tendra filas columnas como atributos de instancias
     def __init__(self, filas, columnas):
         self.filas = filas
