@@ -1,4 +1,3 @@
-import copy
 from mapa import Mapa
 from calculadora_rutas import CalculadoraDeRutas
 from input_usuario import UsuarioEntrada
