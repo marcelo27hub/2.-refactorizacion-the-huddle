@@ -65,6 +65,7 @@ def main():
             columnas = int(input("Ingrese cantidad de columnas: "))
             mapa = Mapa(filas, columnas)
             mapa.agregar_obstaculos_usuario()
+            mapa.imprimir_mapa()
             inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
             destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
             calculadora = CalculadoraDeRutas(mapa)
