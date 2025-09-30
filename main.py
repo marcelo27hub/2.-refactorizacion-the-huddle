@@ -11,7 +11,7 @@ def main():
     columnas = int(input("Ingrese cantidad de columnas: "))
     mapa = Mapa(filas, columnas)
     mapa.agregar_obstaculos_usuario()
-    mapa.imprimir()
+    mapa.imprimir_mapa()
 
     inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
     destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
@@ -37,7 +37,7 @@ def main():
         opcion = input("Seleccione una opción: ")
 
         if opcion == "1":
-            mapa.imprimir()
+            mapa.imprimir_mapa()
         elif opcion == "2":
             if mapa_limpio:
                 for fila in mapa_limpio:
