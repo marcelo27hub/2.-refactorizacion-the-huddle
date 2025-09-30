@@ -14,7 +14,7 @@ class mapa:
         self.destino = None
 #CREAMOS NUESTROS METODOS DE INSTANCIA
     #imprimimos nuestro tablero 
-    def imprimir(self):
+    def imprimir_mapa(self):
         for fila in self.tablero:
             print(" ".join(fila))
         #salto de linea para que se vea mejor     
@@ -53,18 +53,3 @@ class mapa:
             limpio[camino[-1][0]][camino[-1][1]] = " F "
         return limpio
     
-    #permite al usuario agregar obstaculos aleatorios
-    def agregar_obstaculos(self):
-        tipos = {" A ": "Agua", " X ": "Obastaculo"}
-        for tipo, nombre in tipos.items():
-            try:
-                cantidad = int(input(f"ingrese la cantidad de {nombre}: "))
-            except ValueError:
-                print("Numero invalido")
-            puestos = 0
-            while puestos < cantidad:
-                fila = random.randint(0, self.filas-1)
-                columna = random.randint(0, self.columnas-1)
-                if self.tablero[fila][columna] == " . ":
-                    self.agregar_obstaculos(fila, columna, tipo)
-                    puestos += 1
