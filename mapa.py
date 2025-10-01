@@ -40,14 +40,18 @@ class Mapa:
         limpio = [[" . " for _ in range(self.columnas)] for _ in range(self.filas)]
         if camino:
             for f, c in camino:
-                if self.tablero[f][c] == " A ":
-                    limpio[f][c] = " A "
-                else:
+                if self.tablero[f][c] == " . ":
                     limpio[f][c] = " * "
             # marcar inicio y destino
             limpio[camino[0][0]][camino[0][1]] = " P "
             limpio[camino[-1][0]][camino[-1][1]] = " F "
+        # conservar agua
+        for i in range(self.filas):
+            for j in range(self.columnas):
+                if self.tablero[i][j] == " A ":
+                    limpio[i][j] = " A "
         return limpio
+
 
     # Método para agregar obstáculos desde la función externa
     def agregar_obstaculos_usuario(self):
