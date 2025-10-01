@@ -57,14 +57,16 @@ def main():
             print("Tipos de celda disponibles:\n . -> Camino libre\n A -> Agua\n X -> Obstáculo")
             tipo = input("Ingrese el tipo de celda: ").strip().upper()
             tipo = f" {tipo} "
-            if mapa.modificar_celda(fila, columna, tipo):
-                camino = calculadora.calcular_ruta(inicio, destino)
-                if camino:
-                    calculadora.marcar_camino(camino, inicio, destino)
-                    print("Camino recalculado con los nuevos obstáculos.")
+            if tipo in [" . ", " A ", " X "]:
+                if mapa.modificar_celda(fila, columna, tipo):
+                    camino = calculadora.calcular_ruta(inicio, destino)
+                    if camino:
+                        calculadora.marcar_camino(camino, inicio, destino)
+                        print("Camino recalculado con los nuevos obstáculos.")
+                    else:
+                        print("No se encontró camino con los cambios realizados.")
                 else:
-                    mapa_limpio = None
-                    print("No se encontró camino.")
+                    print("No se pudo modificar la celda.")
             else:
                 print("Tipo de celda inválido.")
 
