@@ -53,7 +53,9 @@ class CalculadoraDeRutas(AlgoritmoBusqueda):
             elif (fila, col) == destino:
                 self.mapa.tablero[fila][col] = " F "
             elif self.mapa.tablero[fila][col] == " . ":
-                self.mapa.tablero[fila][col] = " * "                
+                self.mapa.tablero[fila][col] = " * " 
+            elif self.mapa.tablero[fila][col] == " A ":
+                self.mapa.tablero[fila][col] = " A " #mantener el agua visible               
                     
     
     
