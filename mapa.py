@@ -35,21 +35,22 @@ class Mapa:
             return True
         return False
 
-    # Genera un tablero limpio mostrando solo el camino y el agua
     def generar_tablero_limpio(self, camino):
         limpio = [[" . " for _ in range(self.columnas)] for _ in range(self.filas)]
-        if camino:
-            for f, c in camino:
-                if self.tablero[f][c] == " . ":
-                    limpio[f][c] = " * "
-            # marcar inicio y destino
-            limpio[camino[0][0]][camino[0][1]] = " P "
-            limpio[camino[-1][0]][camino[-1][1]] = " F "
-        # conservar agua
+        # copiar obstáculos y agua
         for i in range(self.filas):
             for j in range(self.columnas):
                 if self.tablero[i][j] == " A ":
                     limpio[i][j] = " A "
+                elif self.tablero[i][j] == " X ":
+                    limpio[i][j] = " X "
+        # marcar camino exacto
+        if camino:
+            for f, c in camino:
+                if limpio[f][c] == " . ":
+                    limpio[f][c] = " * "
+            limpio[camino[0][0]][camino[0][1]] = " P "
+            limpio[camino[-1][0]][camino[-1][1]] = " F "
         return limpio
 
 
