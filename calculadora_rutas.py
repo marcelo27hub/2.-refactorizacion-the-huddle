@@ -1,11 +1,13 @@
-#importamos una cola de prioridad
+# calculadora_rutas.py
+from algoritmos import AlgoritmoBusqueda  # la clase abstracta#importamos una cola de prioridad
 import heapq
 
-class CalculadoraDeRutas:
+class CalculadoraDeRutas(AlgoritmoBusqueda):
+    """Calculadora de rutas que hereda de AlgoritmoBusqueda"""
     
     #atributo de instancia
     def __init__(self, mapa):
-        self.mapa = mapa
+        super().__init__(mapa)
     
     #defino mi metodo heuristica     
     def heuristica(self, a, b):
