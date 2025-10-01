@@ -1,29 +1,33 @@
+# main.py
 from mapa import Mapa
 from calculadora_rutas import CalculadoraDeRutas
 from input_usuario import UsuarioEntrada
 
 def main():
-    print("BIENVENIDOS AL BUSCADOR DE RUTAS OOP")
-    print(".: Camino libre  A: Agua  X: Obstáculo")
-    
-    filas = int(input("Ingrese cantidad de filas: "))
-    columnas = int(input("Ingrese cantidad de columnas: "))
-    mapa = Mapa(filas, columnas)
-    mapa.agregar_obstaculos_usuario()
-    mapa.imprimir_mapa()
+    print("BIENVENIDOS AL BUSCADOR DE RUTAS")
+    print(".: Camino libre  A: Agua  X: Obstáculo\n")
 
+    # Función para crear un nuevo tablero
+    def crear_tablero():
+        filas = int(input("Ingrese cantidad de filas: "))
+        columnas = int(input("Ingrese cantidad de columnas: "))
+        mapa = Mapa(filas, columnas)
+        mapa.agregar_obstaculos_usuario()
+        mapa.imprimir_mapa()
+        return mapa
+
+    mapa = crear_tablero()
     inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
     destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
-
     calculadora = CalculadoraDeRutas(mapa)
     camino = calculadora.calcular_ruta(inicio, destino)
 
+    mapa_limpio = None
     if camino:
         calculadora.marcar_camino(camino, inicio, destino)
         mapa_limpio = mapa.generar_tablero_limpio(camino)
     else:
-        mapa_limpio = None
-        print("No se encontró camino.")
+        print("No se encontró camino.\n")
 
     while True:
         print("\nOpciones:")
@@ -33,7 +37,7 @@ def main():
         print("4: Crear un nuevo tablero")
         print("5: Salir")
 
-        opcion = input("Seleccione una opción: ")
+        opcion = input("Seleccione una opción: ").strip()
 
         if opcion == "1":
             mapa.imprimir_mapa()
@@ -44,27 +48,26 @@ def main():
             else:
                 print("No hay camino calculado aún.")
         elif opcion == "3":
-            fila = int(input(f"Fila (1-{mapa.filas}): ")) - 1
-            columna = int(input(f"Columna (1-{mapa.columnas}): ")) - 1
-            tipo = input("Ingrese el tipo de celda (. / A / X): ").strip().upper()
-            tipo = f" {tipo} "
-            if mapa.modificar_celda(fila, columna, tipo):
-                camino = calculadora.calcular_ruta(inicio, destino)
-                if camino:
-                    calculadora.marcar_camino(camino, inicio, destino)
-                    mapa_limpio = mapa.generar_tablero_limpio(camino)
-                    print("Camino recalculado con los nuevos obstáculos.")
+            try:
+                fila = int(input(f"Fila (1-{mapa.filas}): ")) - 1
+                columna = int(input(f"Columna (1-{mapa.columnas}): ")) - 1
+                tipo = input("Tipos de celda disponibles (. / A / X): ").strip().upper()
+                tipo = f" {tipo} "
+                if mapa.modificar_celda(fila, columna, tipo):
+                    camino = calculadora.calcular_ruta(inicio, destino)
+                    if camino:
+                        calculadora.marcar_camino(camino, inicio, destino)
+                        mapa_limpio = mapa.generar_tablero_limpio(camino)
+                        print("Camino recalculado con los nuevos obstáculos.")
+                    else:
+                        mapa_limpio = None
+                        print("No se encontró camino.")
                 else:
-                    mapa_limpio = None
-                    print("No se encontró camino.")
-            else:
-                print("Tipo de celda inválido.")
+                    print("Tipo de celda inválido.")
+            except ValueError:
+                print("Entrada inválida. Intente de nuevo.")
         elif opcion == "4":
-            filas = int(input("Ingrese cantidad de filas: "))
-            columnas = int(input("Ingrese cantidad de columnas: "))
-            mapa = Mapa(filas, columnas)
-            mapa.agregar_obstaculos_usuario()
-            mapa.imprimir_mapa()
+            mapa = crear_tablero()
             inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
             destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
             calculadora = CalculadoraDeRutas(mapa)
