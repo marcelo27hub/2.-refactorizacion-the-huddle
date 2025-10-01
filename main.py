@@ -8,12 +8,12 @@ def main():
     print("BIENVENIDOS AL BUSCADOR DE RUTAS")
     print(".: Camino libre\nA: Agua\nX: Obstáculo")
 
-    # Inicializar tablero
+    # Crear tablero
     filas = int(input("Ingrese cantidad de filas: "))
     columnas = int(input("Ingrese cantidad de columnas: "))
     mapa = Mapa(filas, columnas)
     mapa.agregar_obstaculos_usuario()
-
+    
     print("\nTablero con obstáculos:")
     mapa.imprimir_mapa()
 
@@ -21,18 +21,17 @@ def main():
     inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
     destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
 
-    # Calcular ruta
+    # Inicializar calculadora de rutas
     calculadora = CalculadoraDeRutas(mapa)
     camino = calculadora.calcular_ruta(inicio, destino)
 
-    # Marcar camino completo y generar mapa limpio
-    mapa_completo = copy.deepcopy(mapa)
+    # Generar mapa limpio con camino
     if camino:
         calculadora.marcar_camino(camino, inicio, destino)
         mapa_limpio = mapa.generar_tablero_limpio(camino)
     else:
         mapa_limpio = None
-        print("No se encontró camino.")
+        print("No se encontró camino inicial.")
 
     while True:
         print("\nOpciones:")
@@ -67,10 +66,10 @@ def main():
                 camino = calculadora.calcular_ruta(inicio, destino)
                 if camino:
                     calculadora.marcar_camino(camino, inicio, destino)
-                    print("Camino recalculado con los nuevos obstáculos.")
+                    print("Camino recalculado con los nuevos obstáculos:")
+                    mapa.imprimir_mapa()
                 else:
-                    mapa_limpio = None
-                    print("No se encontró camino.")
+                    print("No se encontró camino. Intenta desbloquear otra celda.")
             else:
                 print("Tipo de celda inválido.")
 
@@ -89,7 +88,7 @@ def main():
                 mapa_limpio = mapa.generar_tablero_limpio(camino)
             else:
                 mapa_limpio = None
-                print("No se encontró camino.")
+                print("No se encontró camino en el nuevo tablero.")
 
         elif opcion == "5":
             print("Saliendo del programa...")
