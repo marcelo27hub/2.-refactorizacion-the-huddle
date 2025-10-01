@@ -2,25 +2,31 @@
 from mapa import Mapa
 from calculadora_rutas import CalculadoraDeRutas
 from input_usuario import UsuarioEntrada
+import copy
 
 def main():
     print("BIENVENIDOS AL BUSCADOR DE RUTAS")
     print(".: Camino libre\nA: Agua\nX: Obstáculo")
 
+    # Inicializar tablero
     filas = int(input("Ingrese cantidad de filas: "))
     columnas = int(input("Ingrese cantidad de columnas: "))
     mapa = Mapa(filas, columnas)
     mapa.agregar_obstaculos_usuario()
-    
+
     print("\nTablero con obstáculos:")
     mapa.imprimir_mapa()
 
+    # Pedir inicio y destino
     inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
     destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
 
+    # Calcular ruta
     calculadora = CalculadoraDeRutas(mapa)
     camino = calculadora.calcular_ruta(inicio, destino)
 
+    # Marcar camino completo y generar mapa limpio
+    mapa_completo = copy.deepcopy(mapa)
     if camino:
         calculadora.marcar_camino(camino, inicio, destino)
         mapa_limpio = mapa.generar_tablero_limpio(camino)
@@ -57,16 +63,14 @@ def main():
             print("Tipos de celda disponibles:\n . -> Camino libre\n A -> Agua\n X -> Obstáculo")
             tipo = input("Ingrese el tipo de celda: ").strip().upper()
             tipo = f" {tipo} "
-            if tipo in [" . ", " A ", " X "]:
-                if mapa.modificar_celda(fila, columna, tipo):
-                    camino = calculadora.calcular_ruta(inicio, destino)
-                    if camino:
-                        calculadora.marcar_camino(camino, inicio, destino)
-                        print("Camino recalculado con los nuevos obstáculos.")
-                    else:
-                        print("No se encontró camino con los cambios realizados.")
+            if mapa.modificar_celda(fila, columna, tipo):
+                camino = calculadora.calcular_ruta(inicio, destino)
+                if camino:
+                    calculadora.marcar_camino(camino, inicio, destino)
+                    print("Camino recalculado con los nuevos obstáculos.")
                 else:
-                    print("No se pudo modificar la celda.")
+                    mapa_limpio = None
+                    print("No se encontró camino.")
             else:
                 print("Tipo de celda inválido.")
 
