@@ -1,13 +1,15 @@
 from obstaculos import agregar_obstaculos_usuario as agregar_obs
 
 class Mapa:
-    def __init__(self, filas, columnas):
+    def __init__(self, filas, columnas):#constructor
+        #atributos de instancias
         self.filas = filas
         self.columnas = columnas
         self.tablero = [[" . " for _ in range(columnas)] for _ in range(filas)]
         self.inicio = None
         self.destino = None
-
+    #METODOS DE LA CLASE(ACCIONES DEL OBJETO)
+    
     # Método para imprimir el tablero
     def imprimir_mapa(self):
         for fila in self.tablero:
