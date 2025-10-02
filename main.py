@@ -3,6 +3,7 @@ from mapa import Mapa
 from obstaculos import agregar_obstaculos_usuario
 from input_usuario import UsuarioEntrada
 from calculadora_rutas import CalculadoraDeRutas
+import copy
 
 def main():
     print("BIENVENIDOS AL BUSCADOR DE RUTAS")
@@ -20,8 +21,6 @@ def main():
 
     # Crear mapa
     mapa = Mapa(filas, columnas)
-
-    # Agregar obstáculos aleatorios
     mapa.agregar_obstaculos_usuario()
 
     print("\nTablero con obstáculos:")
@@ -29,22 +28,24 @@ def main():
 
     # Entrada de inicio y destino
     inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
-    mapa.tablero[inicio[0]][inicio[1]] = " P "
     destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
-    mapa.tablero[destino[0]][destino[1]] = " F "
 
-    # Crear calculadora de rutas
+    # Guardamos una copia limpia con obstáculos y agua, sin camino
+    mapa_base = copy.deepcopy(mapa.tablero)
+
+    # Creamos calculadora
     calculadora = CalculadoraDeRutas(mapa)
     camino = calculadora.calcular_ruta(inicio, destino)
 
     if camino:
+        # Resetear tablero base y marcar el camino
+        mapa.tablero = copy.deepcopy(mapa_base)
         calculadora.marcar_camino(camino, inicio, destino)
         mapa_limpio = mapa.generar_tablero_limpio(camino)
     else:
         print("No se encontró camino entre inicio y destino.")
         mapa_limpio = None
 
-    # Menú interactivo
     while True:
         print("\nOpciones:")
         print("1: Mostrar tablero completo con obstáculos y camino")
@@ -72,18 +73,22 @@ def main():
             print(" . -> Camino libre")
             print(" A -> Agua")
             print(" X -> Obstáculo")
-            tipo = input("Ingrese el tipo de celda: ").upper()
+            tipo = f" {input('Ingrese el tipo de celda: ').strip().upper()} "
 
             if mapa.modificar_celda(fila, columna, tipo):
+                # Resetear tablero base y recalcular
+                mapa.tablero = copy.deepcopy(mapa_base)
                 camino = calculadora.calcular_ruta(inicio, destino)
                 if camino:
                     calculadora.marcar_camino(camino, inicio, destino)
-                    mapa_limpio = mapa.generar_tablero_limpio(camino)  # 🔑 actualiza camino limpio
+                    mapa_limpio = mapa.generar_tablero_limpio(camino)
                     print("Camino recalculado con los nuevos obstáculos:")
                     mapa.imprimir_mapa()
                 else:
                     mapa_limpio = None
                     print("No se encontró camino. Intenta desbloquear otra celda.")
+                # Actualizar la base con los cambios de obstáculos
+                mapa_base[fila][columna] = tipo
             else:
                 print("Tipo de celda inválido.")
 
