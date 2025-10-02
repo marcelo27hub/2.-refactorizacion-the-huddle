@@ -1,6 +1,5 @@
 # main.py
 from mapa import Mapa
-from obstaculos import agregar_obstaculos_usuario
 from input_usuario import UsuarioEntrada
 from calculadora_rutas import CalculadoraDeRutas
 import copy
