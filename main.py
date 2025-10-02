@@ -29,7 +29,7 @@ def main():
     inicio = UsuarioEntrada.pedir_coordenadas("Inicio", mapa)
     destino = UsuarioEntrada.pedir_coordenadas("Destino", mapa)
 
-    # Guardamos una copia limpia con obstáculos y agua, sin camino
+    # Guardamos una copia limpia con obstáculos y agua, sin camino200427
     mapa_base = copy.deepcopy(mapa.tablero)
 
     # Creamos calculadora
